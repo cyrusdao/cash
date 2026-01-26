@@ -8,30 +8,19 @@ const Hero = () => {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.language === "fa";
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-visible bg-background">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
       {/* Ambient gradient glow */}
       <div className="absolute inset-0 bg-gradient-hero" />
-      
+
       {/* Subtle grid pattern */}
       <div className="absolute inset-0 geometric-pattern opacity-50" />
 
-      {/* 3D Coin - Background layer - always on flex-end (right in LTR, left in RTL) */}
-      <div className="absolute inset-0 pointer-events-auto z-0 overflow-visible">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.3 }}
-          className="absolute inset-0 flex items-center justify-end overflow-visible"
-        >
-          <div className="w-[55%] h-full translate-x-[35%]">
-            <CyrusCoin3D />
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Content - always on flex-start (left in LTR, right in RTL) */}
-      <div className={`relative z-10 w-full min-h-screen flex items-center justify-start pt-24 pb-16 pointer-events-none ${isRTL ? 'pr-6 lg:pr-12' : 'pl-6 lg:pl-12'}`}>
-        <div className={`max-w-lg ${isRTL ? 'text-right' : 'text-left'}`}>
+      {/* Main content container - constrained width matching header */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 min-h-screen flex items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-4 w-full items-center pt-24 pb-16">
+          {/* Text content - left side */}
+          <div className={`pointer-events-none ${isRTL ? 'text-right lg:order-2' : 'text-left lg:order-1'}`}>
+            <div className={`max-w-lg ${isRTL ? 'ml-auto' : ''}`}>
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -75,8 +64,8 @@ const Hero = () => {
             className={`flex flex-wrap gap-6 mb-10 ${isRTL ? 'flex-row-reverse justify-end' : ''}`}
           >
             {[
-              { value: "1B", label: t("hero.supply") },
-              { value: "Base", label: t("hero.blockchain") },
+              { value: "7B", label: t("hero.supply") },
+              { value: "7", label: t("hero.blockchain") },
               { value: "100%", label: t("hero.diaspora") },
               { value: "50%", label: t("hero.daoSecured") },
             ].map((stat) => (
@@ -117,7 +106,21 @@ const Hero = () => {
           >
             {t("hero.disclaimer")}
           </motion.p>
+            </div>
           </div>
+
+          {/* 3D Coin - right side on desktop, centered on mobile */}
+          <div className={`relative pointer-events-auto ${isRTL ? 'lg:order-1' : 'lg:order-2'}`}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, delay: 0.3 }}
+              className="relative w-full aspect-square max-w-[500px] mx-auto lg:max-w-none lg:w-[120%] lg:-mr-[10%]"
+            >
+              <CyrusCoin3D />
+            </motion.div>
+          </div>
+        </div>
       </div>
 
       {/* Scroll Indicator */}

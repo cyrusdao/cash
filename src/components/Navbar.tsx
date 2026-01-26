@@ -33,7 +33,7 @@ const Navbar = () => {
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo with coin image - clean 3D coin */}
           <a href="#" className="group flex items-center gap-3">
